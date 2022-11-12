@@ -13,6 +13,7 @@
 // employerConversation page "/employerConversation"
 // candidateConversation page "/candidateConversation"
 // }
+
 import {
   Routes,
   Route,
@@ -35,7 +36,6 @@ import EmployerConversation from "../Components/Employer/Conversation";
 import Applicants from "../Components/Employer/Applicants";
 function Navs() {
   const CandidateProtactedRoutes = () => {
-
     if ("a" === "a") {
       return <Outlet />;
     } else {
@@ -49,17 +49,20 @@ function Navs() {
     } else {
       return <Navigate to="/" />;
     }
-  }
-
+  };
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/auth" element={<AuthPage />} />
+        <Route
+          path="candidate/auth"
+          element={<AuthPage type={"candidate"} />}
+        />
+        <Route path="employer/auth" element={<AuthPage type={"employer"} />} />
         <Route element={<CandidateProtactedRoutes />}>
           <Route
-            path="/candidateOnboarding"
+            path="/candidate/onboarding"
             element={<CandidateOnboarding />}
           />
           <Route path="candidate/profile" element={<CandidateProfile />} />

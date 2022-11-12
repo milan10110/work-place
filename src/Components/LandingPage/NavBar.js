@@ -1,6 +1,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import {Box,Switch} from "@mui/material";
+import { Box, Switch } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -12,14 +12,19 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import Logo from '../../assets/logo2.png'
+import Logo from "../../assets/logo2.png";
 import "./NavBar.css";
-const pages = ["Find a job","find a candidate"];
+import { useNavigate } from "react-router-dom";
+const pages = [
+  { label: "Find a job", path: "candidate/auth" },
+  { label: "find a candidate", path: "employer/auth" },
+];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -34,6 +39,10 @@ function NavBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const navigateToPage = (path) => {
+    navigate(path);
   };
 
   return (
@@ -52,11 +61,11 @@ function NavBar() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-            
+
               textDecoration: "none",
             }}
           >
-            <img src={Logo} alt="logo" style={{width:"100px"}}/>
+            <img src={Logo} alt="logo" style={{ width: "100px" }} />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -66,7 +75,6 @@ function NavBar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-            
             >
               <MenuIcon />
             </IconButton>
@@ -89,8 +97,11 @@ function NavBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem
+                  key={page.label}
+                  onClick={() => navigateToPage(page.path)}
+                >
+                  <Typography textAlign="center">{page.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -108,27 +119,27 @@ function NavBar() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-            
+
               textDecoration: "none",
             }}
           >
-            <img src={Logo} alt="logo" style={{width:"100px"}}/>
+            <img src={Logo} alt="logo" style={{ width: "100px" }} />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.label}
+                onClick={() => navigateToPage(page.path)}
                 sx={{ my: 2, color: "black", display: "block" }}
               >
-                {page}
+                {page.label}
               </Button>
             ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-            <Switch  defaultChecked />
+              <Switch defaultChecked />
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}
